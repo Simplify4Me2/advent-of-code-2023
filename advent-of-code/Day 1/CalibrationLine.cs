@@ -78,7 +78,7 @@
             {
                 if (_input.Contains(word))
                 {
-                    int firstLetterIndex = _input.IndexOf(word);
+                    int firstLetterIndex = _input.LastIndexOf(word);
                     if (index == null || firstLetterIndex > index)
                     {
                         index = firstLetterIndex;
@@ -123,10 +123,4 @@
             return (firstValue * 10) + lastValue;
         }
     }
-
-    //public class KeyValuePair
-    //{
-    //    public int Index { get; }
-    //    public int Value { get; }
-    //}
 }
