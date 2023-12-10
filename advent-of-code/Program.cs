@@ -2,4 +2,4 @@
 
 using advent_of_code;
 
-Trebuchet_PartTwo.Run();
+CubeConundrum.Run();

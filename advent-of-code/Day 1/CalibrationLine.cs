@@ -1,4 +1,4 @@
-﻿namespace advent_of_code.Day_2
+﻿namespace advent_of_code.Day_1
 {
     public class CalibrationLine(string input)
     {

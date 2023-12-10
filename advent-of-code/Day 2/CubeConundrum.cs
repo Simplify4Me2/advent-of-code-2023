@@ -1,34 +1,25 @@
-﻿using advent_of_code.Day_1;
-
-namespace advent_of_code
+﻿namespace advent_of_code
 {
-    public static class Trebuchet_PartTwo
+    public static class CubeConundrum
     {
-
-
         public static void Run()
         {
-
-            int sum = 0;
             string line;
             try
             {
-                StreamReader sr = new("D:\\Git\\advent-of-code-2023\\advent-of-code\\Day 1\\input-trebuchet-part-two.txt");
+                StreamReader sr = new("D:\\Git\\advent-of-code-2023\\advent-of-code\\Day 2\\sample-cube-conundrum.txt");
                 line = sr.ReadLine();
-                while (line is not null)
+                while (line != null)
                 {
                     Console.WriteLine(line);
 
-                    CalibrationLine calibrationLine = new(line);
 
-                    Console.WriteLine($"Calibration value: {calibrationLine.Value}");
-                    sum += calibrationLine.Value;
 
                     line = sr.ReadLine();
                 }
 
                 sr.Close();
-                Console.WriteLine($"Sum: {sum}");
+                
                 Console.ReadLine();
             }
             catch (Exception e)
