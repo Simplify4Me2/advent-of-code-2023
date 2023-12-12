@@ -1,7 +1,7 @@
 ﻿using advent_of_code.Day_1;
 using System.Collections;
 
-namespace advent_of_code_tests.Day_2
+namespace advent_of_code_tests.Day_1
 {
     public class CalbriationDataGenerator : IEnumerable<object[]>
     {

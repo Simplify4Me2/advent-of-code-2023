@@ -2,4 +2,4 @@
 
 using advent_of_code;
 
-CubeConundrum.Run();
+CubeConundrum_PartTwo.Run();
