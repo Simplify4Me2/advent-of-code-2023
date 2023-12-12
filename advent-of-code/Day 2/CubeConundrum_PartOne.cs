@@ -18,7 +18,7 @@ namespace advent_of_code
                     string[] gamesText = LineFormatter.FindGames(line);
                     Console.WriteLine($"Id: {id}");
 
-                    List<Game> list = new List<Game>();
+                    List<Game> list = [];
 
                     foreach (string text in gamesText)
                     {

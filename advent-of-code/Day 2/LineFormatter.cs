@@ -7,9 +7,10 @@
             string[] splitText = line.Split(":");
 
             string textContainingId = splitText.First();
-            int.TryParse(textContainingId.Substring(5, textContainingId.Length - 5), out int id);
+            if (int.TryParse(textContainingId.AsSpan(5, textContainingId.Length - 5), out int id))
+                return id;
 
-            return id;
+            return 0;
         }
 
         public static string[] FindGames(string line)
@@ -30,22 +31,11 @@
                 if (text.Contains(colorText))
                 {
                     string newText = text.TrimEnd(colorText.ToCharArray()).Trim();
-                    int.TryParse(newText, out int value);
-                    return value;
+                    if (int.TryParse(newText, out int value)) return value;
                 }
             }
 
             return 0;
-        }
-
-        public static int FindGreenValue(string gameText)
-        {
-            return 1;
-        }
-
-        public static int FindBlueValue(string gameText)
-        {
-            return 1;
         }
     }
 }
