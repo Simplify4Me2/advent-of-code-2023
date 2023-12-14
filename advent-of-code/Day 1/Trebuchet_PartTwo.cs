@@ -13,7 +13,7 @@ namespace advent_of_code
             string line;
             try
             {
-                StreamReader sr = new("D:\\Git\\advent-of-code-2023\\advent-of-code\\Day 1\\input-trebuchet-part-two.txt");
+                StreamReader sr = new("D:\\Git\\advent-of-code-2023\\advent-of-code\\Day 1\\input-trebuchet-part-one.txt");
                 line = sr.ReadLine();
                 while (line is not null)
                 {

@@ -18,7 +18,9 @@ namespace advent_of_code
                     string[] gamesText = LineFormatter.FindGames(line);
                     Console.WriteLine($"Id: {id}");
 
-                    List<Game> list = [];
+                    int redPower = 0;
+                    int greenPower = 0;
+                    int bluePower = 0;
 
                     foreach (string text in gamesText)
                     {
@@ -26,11 +28,16 @@ namespace advent_of_code
                         int red = LineFormatter.FindValue(text, "red");
                         int green = LineFormatter.FindValue(text, "green");
                         int blue = LineFormatter.FindValue(text, "blue");
-                        list.Add(new Game(red, green, blue));
+
+                        if (red > redPower)
+                            redPower = red;
+                        if (green > greenPower)
+                            greenPower = green;
+                        if (blue > bluePower)
+                            bluePower = blue;
                     }
 
-                    if (!list.Any(game => !game.IsPossible))
-                        sum += id;
+                    sum += redPower * greenPower * bluePower;
 
                     line = sr.ReadLine();
                 }

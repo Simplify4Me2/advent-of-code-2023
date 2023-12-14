@@ -2,4 +2,4 @@
 
 using advent_of_code;
 
-CubeConundrum_PartTwo.Run();
+GearRatios_PartOne.Run();
