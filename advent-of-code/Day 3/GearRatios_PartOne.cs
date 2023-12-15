@@ -1,22 +1,30 @@
-﻿namespace advent_of_code
+﻿using advent_of_code.Day_3;
+
+namespace advent_of_code
 {
     public class GearRatios_PartOne
     {
         public static void Run()
         {
-            char[,] grid = new char[10, 10];
+            List<string> list = [];
             string line;
             try
             {
                 StreamReader sr = new("D:\\Git\\advent-of-code-2023\\advent-of-code\\Day 3\\sample-gear-ratios.txt");
                 line = sr.ReadLine();
+
+
                 while (line != null)
                 {
                     Console.WriteLine($"Line: {line}");
 
+                    list.Add(line);
 
                     line = sr.ReadLine();
                 }
+
+                var engineSchematic = new EngineSchematic(list);
+                Console.WriteLine($"Sum: {engineSchematic.Sum}");
 
                 sr.Close();
 
