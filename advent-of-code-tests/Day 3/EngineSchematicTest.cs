@@ -38,8 +38,6 @@ namespace advent_of_code_tests.Day_3
             EngineSchematic engineSchematic = new(Sample);
 
             Assert.Equal(4361, engineSchematic.Sum);
-
-            //Assert.True(false);
         }
     }
 }
