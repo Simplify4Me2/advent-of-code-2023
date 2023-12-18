@@ -10,14 +10,13 @@ namespace advent_of_code
             string line;
             try
             {
-                StreamReader sr = new("D:\\Git\\advent-of-code-2023\\advent-of-code\\Day 3\\sample-gear-ratios.txt");
+                StreamReader sr = new("D:\\Git\\advent-of-code-2023\\advent-of-code\\Day 3\\input-gear-ratios.txt");
                 line = sr.ReadLine();
 
 
                 while (line != null)
                 {
-                    Console.WriteLine($"Line: {line}");
-
+                    
                     list.Add(line);
 
                     line = sr.ReadLine();

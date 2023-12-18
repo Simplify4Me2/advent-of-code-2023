@@ -5,97 +5,113 @@ namespace advent_of_code.Day_3
     public partial class EngineSchematic(List<string> list)
     {
         private List<string> List { get; } = list;
-        private Regex Regex = MatchNumbersRegex();
+        private Regex NumbersRegex = MatchNumbersRegex();
+        private Regex SymbolsRegex = MatchSymbolsRegex();
 
         public int Sum => GetSum();
 
         private int GetSum()
         {
-            var numbers = new List<Number>();
+            int sum = 0;
             int lineIndex = 0;
 
             foreach (string line in List)
             {
-                if (Regex.IsMatch(line))
-                    foreach (Match match in Regex.Matches(line).Cast<Match>())
+                if (NumbersRegex.IsMatch(line))
+                    foreach (Match match in NumbersRegex.Matches(line).Cast<Match>())
                     {
-                        Console.WriteLine(match.Value);
-                        var valueStartIndex = line.IndexOf(match.Value);
-
                         if (int.TryParse(match.Value, out int value))
                         {
-                            Number number = new(value, new(valueStartIndex, lineIndex));
+                            bool anyNumberAdjacentToSymbol = false;
+                            for (int i = 0; i < match.Value.Length; i++)
+                            {
+                                if (anyNumberAdjacentToSymbol || IsAdjacentToSymbol(match.Index + i, lineIndex))
+                                    anyNumberAdjacentToSymbol = true;
+                            }
 
-                            string previousLine = lineIndex == 0 ? string.Empty : List[lineIndex - 1];
-                            string nextLine = lineIndex == List.Count - 1 ? string.Empty : List[lineIndex + 1];
+                            if (anyNumberAdjacentToSymbol)
+                                sum += value;
 
-                            if (number.IsAdjacentToASymbol(previousLine, line, nextLine))
-                                numbers.Add(number);
                         }
                     };
 
                 lineIndex++;
             }
 
-            return numbers.Sum(number => number.Value);
+            // 282674 is wrong!!!
+            // 532047 is wrong!!!
+            // 532420 is wrong!!!
+            // 532445 is correct!!!
+            return sum;
         }
 
-        public class Number(int value, Coordinates position)
+        private bool IsAdjacentToSymbol(int x, int y)
         {
-            private Regex Regex = MatchSymbolsRegex();
-            public int Value { get; set; } = value;
-
-            public int Length = value.ToString().Length;
-
-            public Coordinates Position { get; } = position;
-
-            public bool IsAdjacentToASymbol(string previousLine, string currentLine, string nextLine)
+            if (y > 0)
             {
-                if (Regex.IsMatch(previousLine))
-                {
-                    foreach (Match match in Regex.Matches(previousLine))
-                    {
-                        int symbolIndex = previousLine.IndexOf(match.Value);
-                        if (symbolIndex > Position.X - 2 && symbolIndex < Position.X + Length + 2)
-                            return true;
-                    }
-                }
+                string previousLine = List[y - 1];
 
-                if (Regex.IsMatch(currentLine))
-                {
-                    foreach (Match match in Regex.Matches(currentLine))
-                    {
-                        int symbolIndex = currentLine.IndexOf(match.Value);
-                        if (symbolIndex > Position.X - 1 && symbolIndex < Position.X + Length + 1)
-                            return true;
-                    }
-                }
+                char charAbove = previousLine[x];
+                if (SymbolsRegex.IsMatch(charAbove.ToString()))
+                    return true;
 
-                    if (Regex.IsMatch(nextLine))
+                if (x > 0)
                 {
-                    foreach (Match match in Regex.Matches(nextLine))
-                    {
-                        int symbolIndex = nextLine.IndexOf(match.Value);
-                        if (symbolIndex > Position.X - 2 && symbolIndex < Position.X + Length + 2)
-                            return true;
-                    }
+                    char charDiagonalLeftAbove = previousLine[x - 1];
+                    if (SymbolsRegex.IsMatch(charDiagonalLeftAbove.ToString()))
+                        return true;
                 }
-
-                return false;
+                if (x < previousLine.Length - 1) 
+                {
+                    char charDiagonalRightAbove = previousLine[x + 1];
+                    if (SymbolsRegex.IsMatch(charDiagonalRightAbove.ToString()))
+                        return true;
+                }
             }
+
+            if (y < List.Count - 1) 
+            { 
+                string nextLine = List[y + 1];
+                char charBelow = nextLine[x];
+                if (SymbolsRegex.IsMatch(charBelow.ToString()))
+                    return true;
+
+                if (x > 0)
+                {
+                    char charDiagonalLeftBelow = nextLine[x - 1];
+                    if (SymbolsRegex.IsMatch(charDiagonalLeftBelow.ToString()))
+                        return true;
+                }
+                if (x < nextLine.Length - 1)
+                {
+                    char charDiagonalRightBelow = nextLine[x + 1];
+                    if (SymbolsRegex.IsMatch(charDiagonalRightBelow.ToString()))
+                        return true;
+                }
+            }
+
+            string currentLine = List[y];
+
+            if (x > 0)
+            {
+                char charLeft = currentLine[x - 1];
+                if (SymbolsRegex.IsMatch(charLeft.ToString()))
+                    return true;
+            }
+            if (x < currentLine.Length - 1)
+            {
+                char charRight = currentLine[x + 1];
+                if (SymbolsRegex.IsMatch(charRight.ToString()))
+                    return true;
+            }
+
+            return false;
         }
 
-        public class Coordinates(int x, int y)
-        {
-            public int X { get; } = x;
-            public int Y { get; } = y;
-        }
-
-        [GeneratedRegex(@"([0-9])\w+")]
+        [GeneratedRegex(@"([0-9])\w*")]
         private static partial Regex MatchNumbersRegex();
 
-
-        [GeneratedRegex(@"([\#\*\+\$])")]
+        [GeneratedRegex(@"([^0-9\.])+")]
         private static partial Regex MatchSymbolsRegex();
     }
 }
