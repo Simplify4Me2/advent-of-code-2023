@@ -2,4 +2,4 @@
 
 using advent_of_code;
 
-GearRatios_PartOne.Run();
+GearRatios_PartTwo.Run();

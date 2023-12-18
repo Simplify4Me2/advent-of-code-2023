@@ -2,20 +2,23 @@
 
 namespace advent_of_code.Day_3
 {
-    public partial class EngineSchematic(List<string> list)
+    public partial class EngineSchematic(List<string> input)
     {
-        private List<string> List { get; } = list;
+        private List<string> Input { get; } = input;
+
         private Regex NumbersRegex = MatchNumbersRegex();
         private Regex SymbolsRegex = MatchSymbolsRegex();
+        private Regex AsteriskRegex = MatchAsteriskRegex();
 
         public int Sum => GetSum();
+        public int[] GearRatios => GetGearRations().ToArray();
 
         private int GetSum()
         {
             int sum = 0;
             int lineIndex = 0;
 
-            foreach (string line in List)
+            foreach (string line in Input)
             {
                 if (NumbersRegex.IsMatch(line))
                     foreach (Match match in NumbersRegex.Matches(line).Cast<Match>())
@@ -45,11 +48,31 @@ namespace advent_of_code.Day_3
             return sum;
         }
 
+        private List<int> GetGearRations()
+        {
+            List<int> gearRatios = [];
+
+            for (int i = 0; i < Input.Count; i++)
+            {
+                Console.WriteLine(Input[i]);
+                if (AsteriskRegex.IsMatch(Input[i]))
+                {
+                    foreach (Match match in AsteriskRegex.Matches(Input[i]).Cast<Match>())
+                    {
+
+                        Console.WriteLine(match.Index);
+                    }
+                }
+            }
+
+            return gearRatios;
+        }
+
         private bool IsAdjacentToSymbol(int x, int y)
         {
             if (y > 0)
             {
-                string previousLine = List[y - 1];
+                string previousLine = Input[y - 1];
 
                 char charAbove = previousLine[x];
                 if (SymbolsRegex.IsMatch(charAbove.ToString()))
@@ -61,7 +84,7 @@ namespace advent_of_code.Day_3
                     if (SymbolsRegex.IsMatch(charDiagonalLeftAbove.ToString()))
                         return true;
                 }
-                if (x < previousLine.Length - 1) 
+                if (x < previousLine.Length - 1)
                 {
                     char charDiagonalRightAbove = previousLine[x + 1];
                     if (SymbolsRegex.IsMatch(charDiagonalRightAbove.ToString()))
@@ -69,9 +92,9 @@ namespace advent_of_code.Day_3
                 }
             }
 
-            if (y < List.Count - 1) 
-            { 
-                string nextLine = List[y + 1];
+            if (y < Input.Count - 1)
+            {
+                string nextLine = Input[y + 1];
                 char charBelow = nextLine[x];
                 if (SymbolsRegex.IsMatch(charBelow.ToString()))
                     return true;
@@ -90,7 +113,7 @@ namespace advent_of_code.Day_3
                 }
             }
 
-            string currentLine = List[y];
+            string currentLine = Input[y];
 
             if (x > 0)
             {
@@ -113,5 +136,8 @@ namespace advent_of_code.Day_3
 
         [GeneratedRegex(@"([^0-9\.])+")]
         private static partial Regex MatchSymbolsRegex();
+
+        [GeneratedRegex(@"([\*])")]
+        private static partial Regex MatchAsteriskRegex();
     }
 }
