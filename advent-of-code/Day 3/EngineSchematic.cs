@@ -105,9 +105,9 @@ namespace advent_of_code.Day_3
             if (y > 0)
             {
                 string previousLine = Input[y - 1];
-                if (NumbersRegex.IsMatch(previousLine.Substring(x - 1, 3)))
+                if (NumbersRegex.IsMatch(previousLine.AsSpan(x - 1, 3)))
                 {
-                    foreach (Match match in NumbersRegex.Matches(previousLine))
+                    foreach (Match match in NumbersRegex.Matches(previousLine).Cast<Match>())
                     {
                         int matchFirstNumberIndex = match.Index;
                         int matchLastNumberIndex = match.Index + (match.Length - 1);
@@ -122,9 +122,9 @@ namespace advent_of_code.Day_3
             if (y < Input.Count - 1)
             {
                 string nextLine = Input[y + 1];
-                if (NumbersRegex.IsMatch(nextLine.Substring(x - 1, 3)))
+                if (NumbersRegex.IsMatch(nextLine.AsSpan(x - 1, 3)))
                 {
-                    foreach (Match match in NumbersRegex.Matches(nextLine))
+                    foreach (Match match in NumbersRegex.Matches(nextLine).Cast<Match>())
                     {
                         int matchFirstNumberIndex = match.Index;
                         int matchLastNumberIndex = match.Index + (match.Length - 1);
@@ -137,9 +137,9 @@ namespace advent_of_code.Day_3
             }
 
             string currentLine = Input[y ];
-            if (NumbersRegex.IsMatch(currentLine.Substring(x - 1, 3)))
+            if (NumbersRegex.IsMatch(currentLine.AsSpan(x - 1, 3)))
             {
-                foreach (Match match in NumbersRegex.Matches(currentLine))
+                foreach (Match match in NumbersRegex.Matches(currentLine).Cast<Match>())
                 {
                     int matchFirstNumberIndex = match.Index;
                     int matchLastNumberIndex = match.Index + (match.Length - 1);
@@ -150,7 +150,7 @@ namespace advent_of_code.Day_3
                 }
             }
 
-            return adjacentNumbers.ToArray();
+            return [.. adjacentNumbers];
         }
 
         private bool IsAdjacentToSymbol(int x, int y)
