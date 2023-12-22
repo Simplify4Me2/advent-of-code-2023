@@ -11,7 +11,7 @@ namespace advent_of_code.Day_3
         private Regex AsteriskRegex = MatchAsteriskRegex();
 
         public int Sum => GetSum();
-        public int[] GearRatios => GetGearRations().ToArray();
+        public int[] GearRatios => GetGearRatios().ToArray();
 
         private int GetSum()
         {
@@ -48,7 +48,7 @@ namespace advent_of_code.Day_3
             return sum;
         }
 
-        private List<int> GetGearRations()
+        private List<int> GetGearRatios()
         {
             List<int> gearRatios = [];
 
@@ -59,13 +59,98 @@ namespace advent_of_code.Day_3
                 {
                     foreach (Match match in AsteriskRegex.Matches(Input[i]).Cast<Match>())
                     {
-
-                        Console.WriteLine(match.Index);
+                        var adjacentNumbers = FindAdjacentNumbers(match.Index, i);
+                        if (adjacentNumbers.Length == 2)
+                        {
+                            Console.WriteLine($"Gear: {match.Index} with numbers {adjacentNumbers.First()} & {adjacentNumbers.Last()}");
+                            gearRatios.Add(adjacentNumbers.First() * adjacentNumbers.Last());
+                        }
                     }
                 }
             }
 
             return gearRatios;
+        }
+
+        private bool IsAdjacentToTwoNumbers(int x, int y)
+        {
+            int adjacentNumbers = 0;
+            if (y > 0)
+            {
+                string previousLine = Input[y - 1];
+
+                char charAbove = previousLine[x];
+                if (NumbersRegex.IsMatch(charAbove.ToString()))
+                    adjacentNumbers++;
+
+                if (x > 0)
+                {
+                    char charDiagonalLeftAbove = previousLine[x - 1];
+                    if (SymbolsRegex.IsMatch(charDiagonalLeftAbove.ToString()))
+                        adjacentNumbers++;
+                }
+                if (x < previousLine.Length - 1)
+                {
+                    char charDiagonalRightAbove = previousLine[x + 1];
+                    if (SymbolsRegex.IsMatch(charDiagonalRightAbove.ToString()))
+                        adjacentNumbers++;
+                }
+            }
+            return adjacentNumbers == 2;
+        }
+
+        private int[] FindAdjacentNumbers(int x, int y)
+        {
+            List<int> adjacentNumbers = [];
+            if (y > 0)
+            {
+                string previousLine = Input[y - 1];
+                if (NumbersRegex.IsMatch(previousLine.Substring(x - 1, 3)))
+                {
+                    foreach (Match match in NumbersRegex.Matches(previousLine))
+                    {
+                        int matchFirstNumberIndex = match.Index;
+                        int matchLastNumberIndex = match.Index + (match.Length - 1);
+
+                        if (matchLastNumberIndex >= (x - 1) && matchFirstNumberIndex <= (x + 1))
+                            if (int.TryParse(match.Value, out int value))
+                                adjacentNumbers.Add(value);
+                    }
+                }
+            }
+
+            if (y < Input.Count - 1)
+            {
+                string nextLine = Input[y + 1];
+                if (NumbersRegex.IsMatch(nextLine.Substring(x - 1, 3)))
+                {
+                    foreach (Match match in NumbersRegex.Matches(nextLine))
+                    {
+                        int matchFirstNumberIndex = match.Index;
+                        int matchLastNumberIndex = match.Index + (match.Length - 1);
+
+                        if (matchLastNumberIndex >= (x - 1) && matchFirstNumberIndex <= (x + 1))
+                            if (int.TryParse(match.Value, out int value))
+                                adjacentNumbers.Add(value);
+                    }
+                }
+            }
+
+            string currentLine = Input[y ];
+            if (NumbersRegex.IsMatch(currentLine.Substring(x - 1, 3)))
+            {
+                foreach (Match match in NumbersRegex.Matches(currentLine))
+                {
+                    int matchFirstNumberIndex = match.Index;
+                    int matchLastNumberIndex = match.Index + (match.Length - 1);
+
+                    if (matchLastNumberIndex >= (x - 1) && matchFirstNumberIndex <= (x + 1))
+                        if (int.TryParse(match.Value, out int value))
+                            adjacentNumbers.Add(value);
+                }
+            }
+
+            return adjacentNumbers.ToArray();
         }
 
         private bool IsAdjacentToSymbol(int x, int y)

@@ -262,5 +262,31 @@ namespace advent_of_code_tests.Day_3
 
             Assert.Equal(expected, engineSchematic.Sum);
         }
+
+        [Fact]
+        public void GetGearRatios_ReturnsAllPartNumbers()
+        {
+            var input = new List<string>
+                {
+                    "467..114..",
+                    "...*......",
+                    "..35..633.",
+                    "......#...",
+                    "617*......",
+                    ".....+.58.",
+                    "..592.....",
+                    "..........",
+                    "....2*5...",
+                    "..........",
+                    "......755.",
+                    "...$.*....",
+                    ".664.598.."
+                };
+
+            var engineSchematic = new EngineSchematic(input);
+
+            int[] expected = [(467 * 35), (2 * 5), (755 * 598)];
+            Assert.Equal(expected, engineSchematic.GearRatios);
+        }
     }
 }
