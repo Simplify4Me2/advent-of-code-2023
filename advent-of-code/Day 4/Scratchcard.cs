@@ -9,7 +9,18 @@
 
         private int GetPoints() 
         {
-            return 0;
+            int points = 0;
+
+            foreach(int winningNumber in  WinningNumbers) 
+            {
+                if (YourNumbers.Contains(winningNumber))
+                {
+                    if (points == 0) points = 1;
+                    else points *=2;
+                }
+            }
+
+            return points;
         }
     }
 }
