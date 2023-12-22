@@ -2,4 +2,4 @@
 
 using advent_of_code;
 
-GearRatios_PartTwo.Run();
+Scratchcards_PartOne.Run();
