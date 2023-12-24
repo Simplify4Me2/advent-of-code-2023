@@ -2,4 +2,4 @@
 
 using advent_of_code;
 
-Scratchcards_PartOne.Run();
+Scratchcards_PartTwo.Run();
