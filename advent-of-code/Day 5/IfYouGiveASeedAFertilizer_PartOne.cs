@@ -22,6 +22,25 @@ namespace advent_of_code
                 sr.Close();
 
                 TextFormatter formatter = new([.. text]);
+                var seeds = formatter.FindSeeds();
+                var seedToSoilMap = formatter.FindSeedToSoilMap();
+                var soilToFertilizerMap = formatter.FindSoilToFertilizerMap();
+                var fertilizerToWaterMap = formatter.FindFertilizerToWaterMap();
+                var waterToLightMap = formatter.FindWaterToLightMap();
+                var lightToTemperatureMap = formatter.FindLightToTemperatureMap();
+                var temperatureToHumidityMap = formatter.FindTemperatureToHumidityMap();
+                var humidityToLocationMap = formatter.FindHumidityToLocationMap();
+
+                SeedAnalyzer analyzer = new(seeds, 
+                    seedToSoilMap, 
+                    soilToFertilizerMap, 
+                    fertilizerToWaterMap,
+                    waterToLightMap,
+                    lightToTemperatureMap,
+                    temperatureToHumidityMap,
+                    humidityToLocationMap);
+
+                Console.WriteLine($"Lowest location number: {analyzer.LowestLocation}");
 
                 Console.ReadLine();
             }
