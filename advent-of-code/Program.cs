@@ -2,4 +2,4 @@
 
 using advent_of_code;
 
-Scratchcards_PartTwo.Run();
+IfYouGiveASeedAFertilizer_PartOne.Run();
