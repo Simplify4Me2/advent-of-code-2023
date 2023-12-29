@@ -48,8 +48,8 @@ namespace advent_of_code_tests.Day_5
         [Fact]
         public void LowestLocation_CorrespondsToAnyOfTheInitialSeeds()
         {
-            SeedAnalyzer analyzer = new(_seeds, _seedToSoilMap, _soilToFertilizerMap, _fertilizerToWaterMap, _waterToLightMap, _lightToTemperatureMap, _temperatureToHumidityMap, _humidityToLocationMap);
-            Assert.Equal(35, analyzer.LowestLocation);
+            SeedAnalyzer analyzer = new(_seedToSoilMap, _soilToFertilizerMap, _fertilizerToWaterMap, _waterToLightMap, _lightToTemperatureMap, _temperatureToHumidityMap, _humidityToLocationMap);
+            Assert.Equal(35, analyzer.FindLowestLocationFromSeeds(_seeds));
         }
     }
 }

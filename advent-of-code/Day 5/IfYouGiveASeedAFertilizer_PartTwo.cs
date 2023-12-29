@@ -31,7 +31,7 @@ namespace advent_of_code
                 var temperatureToHumidityMap = formatter.FindTemperatureToHumidityMap();
                 var humidityToLocationMap = formatter.FindHumidityToLocationMap();
 
-                SeedAnalyzer analyzer = new(seeds, 
+                SeedAnalyzer analyzer = new( 
                     seedToSoilMap, 
                     soilToFertilizerMap, 
                     fertilizerToWaterMap,
@@ -40,7 +40,7 @@ namespace advent_of_code
                     temperatureToHumidityMap,
                     humidityToLocationMap);
 
-                Console.WriteLine($"Lowest location number: {analyzer.LowestLocation}");
+                Console.WriteLine($"Lowest location number: {analyzer.FindLowestLocationFromSeeds(seeds)}");
 
                 Console.ReadLine();
             }

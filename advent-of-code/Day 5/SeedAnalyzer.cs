@@ -1,10 +1,26 @@
 ﻿namespace advent_of_code.Day_5
 {
-    public class SeedAnalyzer(long[] seeds, long[][] seedToSoilMap, long[][] soilToFertilizerMap, long[][] fertilizerToWaterMap, long[][] waterToLightMap, long[][] lightToTemperatureMap, long[][] temperatureToHumidityMap, long[][] humidityToLocationMap)
+    public class SeedAnalyzer(long[][] seedToSoilMap, long[][] soilToFertilizerMap, long[][] fertilizerToWaterMap, long[][] waterToLightMap, long[][] lightToTemperatureMap, long[][] temperatureToHumidityMap, long[][] humidityToLocationMap)
     {
-        public long LowestLocation => FindLowestLocation();
+        public long FindLowestLocationFromSeeds(long[] seeds)
+        {
+            var soil = Map(seeds, seedToSoilMap);
+            var fertilizer = Map(soil, soilToFertilizerMap);
+            var water = Map(fertilizer, fertilizerToWaterMap);
+            var light = Map(water, waterToLightMap);
+            var temperature = Map(light, lightToTemperatureMap);
+            var humidity = Map(temperature, temperatureToHumidityMap);
+            var location = Map(humidity, humidityToLocationMap);
 
-        private long FindLowestLocation()
+            return location.Min();
+        }
+
+        private long FindLowestLocationFromRanges(long[] ranges)
+        {
+            return 0;
+        }
+
+        private long FindLowestLocation(long[] seeds) 
         {
             var soil = Map(seeds, seedToSoilMap);
             var fertilizer = Map(soil, soilToFertilizerMap);
