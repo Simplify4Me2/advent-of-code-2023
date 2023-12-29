@@ -9,10 +9,10 @@
             var firstLine = Text[0];
             string[] numbersAsText = firstLine.Split(':')[1].Split(' ');
 
-            List<int> seeds = [];
+            List<long> seeds = [];
             foreach (var number in numbersAsText)
             {
-                if (int.TryParse(number, out int value))
+                if (Int64.TryParse(number, out long value))
                     seeds.Add(value);
             }
 

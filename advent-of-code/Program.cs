@@ -2,4 +2,4 @@
 
 using advent_of_code;
 
-IfYouGiveASeedAFertilizer_PartOne.Run();
+IfYouGiveASeedAFertilizer_PartTwo.Run();
