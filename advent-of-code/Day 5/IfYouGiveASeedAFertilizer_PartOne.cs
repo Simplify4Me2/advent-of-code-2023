@@ -10,7 +10,7 @@ namespace advent_of_code
             List<string> text = [];
             try
             {
-                StreamReader sr = new("D:\\Git\\advent-of-code-2023\\advent-of-code\\Day 5\\sample-if-you-give-a-seed-a-fertilizer.txt");
+                StreamReader sr = new("D:\\Git\\advent-of-code-2023\\advent-of-code\\Day 5\\input-if-you-give-a-seed-a-fertilizer.txt");
                 line = sr.ReadLine();
 
                 while (line != null)

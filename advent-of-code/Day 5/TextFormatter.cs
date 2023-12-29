@@ -4,7 +4,7 @@
     {
         public string[] Text { get; } = text;
 
-        public int[] FindSeeds()
+        public long[] FindSeeds()
         {
             var firstLine = Text[0];
             string[] numbersAsText = firstLine.Split(':')[1].Split(' ');
@@ -19,40 +19,41 @@
             return [.. seeds];
         }
 
-        public int[][] FindSeedToSoilMap() => FindMap("seed-to-soil");
+        public long[][] FindSeedToSoilMap() => FindMap("seed-to-soil");
 
-        public int[][] FindSoilToFertilizerMap() => FindMap("soil-to-fertilizer");
+        public long[][] FindSoilToFertilizerMap() => FindMap("soil-to-fertilizer");
 
-        public int[][] FindFertilizerToWaterMap() => FindMap("fertilizer-to-water");
+        public long[][] FindFertilizerToWaterMap() => FindMap("fertilizer-to-water");
 
-        public int[][] FindWaterToLightMap() => FindMap("water-to-light");
+        public long[][] FindWaterToLightMap() => FindMap("water-to-light");
 
-        public int[][] FindLightToTemperatureMap() => FindMap("light-to-temperature");
+        public long[][] FindLightToTemperatureMap() => FindMap("light-to-temperature");
 
-        public int[][] FindTemperatureToHumidityMap() => FindMap("temperature-to-humidity");
+        public long[][] FindTemperatureToHumidityMap() => FindMap("temperature-to-humidity");
 
-        public int[][] FindHumidityToLocationMap() => FindMap("humidity-to-location");
+        public long[][] FindHumidityToLocationMap() => FindMap("humidity-to-location");
 
-        private int[][] FindMap(string mapName)
+        private long[][] FindMap(string mapName)
         {
             string definitionLine = Text.First(line => line.Contains(mapName));
-            int index = Array.IndexOf(Text, definitionLine);
+            int index = Array.IndexOf(Text, definitionLine) + 1;
 
-            List<int[]> map = [];
+            List<long[]> map = [];
 
             string nextLine = Text[index++];
             do
             {
                 string[] numbersAsText = nextLine.Split(' ');
-                List<int> sequence = [];
+                List<long> sequence = [];
 
                 foreach (var number in numbersAsText)
                 {
-                    if (int.TryParse(number, out int value))
+                    if (Int64.TryParse(number, out long value))
                         sequence.Add(value);
                 }
+                if (sequence.Count != 3) throw new ArgumentException($"Sequence doesn't contain 3 values: {sequence}");
                 map.Add([.. sequence]);
-                nextLine = Text[index++];
+                nextLine = index < Text.Length ? Text[index++] : string.Empty;
             } while (nextLine != string.Empty);
 
             return [.. map];
