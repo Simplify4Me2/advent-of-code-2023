@@ -10,7 +10,7 @@ namespace advent_of_code
             List<string> text = [];
             try
             {
-                StreamReader sr = new("D:\\Git\\advent-of-code-2023\\advent-of-code\\Day 5\\sample-if-you-give-a-seed-a-fertilizer.txt");
+                StreamReader sr = new("D:\\Git\\advent-of-code-2023\\advent-of-code\\Day 5\\input-if-you-give-a-seed-a-fertilizer.txt");
                 line = sr.ReadLine();
 
                 while (line != null)
@@ -22,7 +22,7 @@ namespace advent_of_code
                 sr.Close();
 
                 TextFormatter formatter = new([.. text]);
-                var seeds = formatter.FindSeeds();
+                var ranges = formatter.FindSeeds();
                 var seedToSoilMap = formatter.FindSeedToSoilMap();
                 var soilToFertilizerMap = formatter.FindSoilToFertilizerMap();
                 var fertilizerToWaterMap = formatter.FindFertilizerToWaterMap();
@@ -40,7 +40,7 @@ namespace advent_of_code
                     temperatureToHumidityMap,
                     humidityToLocationMap);
 
-                Console.WriteLine($"Lowest location number: {analyzer.FindLowestLocationFromSeeds(seeds)}");
+                Console.WriteLine($"Lowest location number: {analyzer.FindLowestLocationFromRanges(ranges)}");
 
                 Console.ReadLine();
             }

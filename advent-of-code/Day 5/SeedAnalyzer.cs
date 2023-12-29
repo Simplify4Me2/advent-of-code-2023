@@ -15,9 +15,35 @@
             return location.Min();
         }
 
-        private long FindLowestLocationFromRanges(long[] ranges)
+        public long FindLowestLocationFromRanges(long[] ranges)
         {
-            return 0;
+            if (ranges.Length % 2 != 0) throw new ArgumentException("Range length is not an even number");
+            long lowestValue = long.MaxValue;
+
+            for (long i = 0; i < ranges.Length; i += 2)
+            {
+                long start = ranges[i];
+                long range = ranges[i + 1];
+                List<long> seeds = [];
+                for (long j = 0; j < range / 2; j++)
+                {
+                    seeds.Add(start + j);
+                }
+                long lowestLocation = FindLowestLocationFromSeeds(seeds.ToArray());
+                if (lowestLocation < lowestValue)
+                    lowestValue = lowestLocation;
+
+                seeds = [];
+                for (long j = range / 2; j < range; j++)
+                {
+                    seeds.Add(start + j);
+                }
+                lowestLocation = FindLowestLocationFromSeeds(seeds.ToArray());
+                if (lowestLocation < lowestValue)
+                    lowestValue = lowestLocation;
+            }
+
+            return lowestValue;
         }
 
         private long FindLowestLocation(long[] seeds) 
@@ -37,11 +63,11 @@
         {
             List<long> result = [];
 
-            for (int i = 0; i < input.Length; i++)
+            for (long i = 0; i < input.Length; i++)
             {
                 long mappedValue = input[i];
                 bool hasBeenMapped = false;
-                for (int j = 0; j < mapping.Length; j++)
+                for (long j = 0; j < mapping.Length; j++)
                 {
                     long destinationRangeStart = mapping[j][0];
                     long sourceRangeStart = mapping[j][1];

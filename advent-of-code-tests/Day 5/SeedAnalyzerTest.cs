@@ -4,7 +4,8 @@ namespace advent_of_code_tests.Day_5
 {
     public class SeedAnalyzerTest
     {
-        private readonly long[] _seeds = [79, 14, 55, 13];
+        private readonly long[] _seeds = [79, 14, 55, 13]; 
+        private readonly long[] _ranges = [79, 14, 55, 13]; 
         private readonly long[][] _seedToSoilMap =
             [
                 [50, 98, 2],
@@ -46,10 +47,17 @@ namespace advent_of_code_tests.Day_5
             ];
 
         [Fact]
-        public void LowestLocation_CorrespondsToAnyOfTheInitialSeeds()
+        public void LowestLocationFromSeeds_ReturnsLowestMappedValue()
         {
             SeedAnalyzer analyzer = new(_seedToSoilMap, _soilToFertilizerMap, _fertilizerToWaterMap, _waterToLightMap, _lightToTemperatureMap, _temperatureToHumidityMap, _humidityToLocationMap);
             Assert.Equal(35, analyzer.FindLowestLocationFromSeeds(_seeds));
+        }
+
+        [Fact]
+        public void LowestLocationFromRanges_ReturnsLowestMappedValue()
+        {
+            SeedAnalyzer analyzer = new(_seedToSoilMap, _soilToFertilizerMap, _fertilizerToWaterMap, _waterToLightMap, _lightToTemperatureMap, _temperatureToHumidityMap, _humidityToLocationMap);
+            Assert.Equal(46, analyzer.FindLowestLocationFromRanges(_ranges));
         }
     }
 }
