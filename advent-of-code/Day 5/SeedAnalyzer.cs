@@ -1,6 +1,4 @@
-﻿using System.Runtime.CompilerServices;
-
-namespace advent_of_code.Day_5
+﻿namespace advent_of_code.Day_5
 {
     public class SeedAnalyzer(long[] seeds, long[][] seedToSoilMap, long[][] soilToFertilizerMap, long[][] fertilizerToWaterMap, long[][] waterToLightMap, long[][] lightToTemperatureMap, long[][] temperatureToHumidityMap, long[][] humidityToLocationMap)
     {
@@ -17,49 +15,6 @@ namespace advent_of_code.Day_5
             var location = Map(humidity, humidityToLocationMap);
 
             return location.Min();
-        }
-
-        public long[] LookUpSoilNumber(long[] seeds)
-        {
-            return Map(seeds, seedToSoilMap);
-        }
-
-        public long[] LookUpFertilizerNumber(long[] soils)
-        {
-            return Map(soils, soilToFertilizerMap);
-        }
-
-        public long[] LookUpWaterNumber(long[] fertilizer)
-        {
-            List<long> result = [];
-
-            for (int i = 0; i < fertilizer.Length; i++)
-            {
-                long mappedValue = fertilizer[i];
-                bool hasBeenMapped = false;
-                for (int j = 0; j < fertilizerToWaterMap.Length; j++)
-                {
-                    long destinationRangeStart = fertilizerToWaterMap[j][0];
-                    long sourceRangeStart = fertilizerToWaterMap[j][1];
-                    long rangeLength = fertilizerToWaterMap[j][2];
-
-                    if (!hasBeenMapped && mappedValue >= sourceRangeStart && mappedValue < sourceRangeStart + rangeLength)
-                    {
-                        mappedValue += (destinationRangeStart - sourceRangeStart);
-
-                        //var foo = mappedValue - sourceRangeStart;
-                        //var bar = destinationRangeStart + foo;
-                        //mappedValue = bar;
-                        hasBeenMapped = true;
-                    }
-
-                }
-                result.Add(mappedValue);
-            }
-
-            return [.. result];
-
-            //return Map(fertilizer, fertilizerToWaterMap);
         }
 
         private long[] Map(long[] input, long[][] mapping)
