@@ -17,9 +17,20 @@ namespace advent_of_code_tests.Day_6
         {
             ToyBoatRace race = new(_races);
 
-            int result = race.DetermineBeatingTheRecord();
+            long result = race.DetermineBeatingTheRecord();
 
             Assert.Equal(288, result);
+        }
+
+        [Fact]
+        public void DetermineNumberOfWaysYouCanBeatTheRecord()
+        {
+            long time = 71530;
+            long distance = 940200;
+
+            var result = ToyBoatRace.DetermineNumberOfWaysYouCanBeatTheRecord(time, distance);
+
+            Assert.Equal(71503, result);
         }
     }
 }

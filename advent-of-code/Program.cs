@@ -2,4 +2,4 @@
 
 using advent_of_code;
 
-WaitForIt_PartOne.Run();
+WaitForIt_PartTwo.Run();

@@ -6,13 +6,13 @@ namespace advent_of_code.Day_6
     {
         private readonly Dictionary<int, int> races = races;
 
-        public int DetermineBeatingTheRecord()
+        public long DetermineBeatingTheRecord()
         {
-            int result = 0;
+            long result = 0;
             
             foreach (var race in races)
             {
-                int waysToBeatTheRecord = DetermineNumberOfWaysYouCanBeatTheRecord(race.Key, race.Value);
+                long waysToBeatTheRecord = DetermineNumberOfWaysYouCanBeatTheRecord(race.Key, race.Value);
                 if(result == 0) result = waysToBeatTheRecord;
                 else result *= waysToBeatTheRecord;
             }
@@ -20,15 +20,15 @@ namespace advent_of_code.Day_6
             return result;
         }
 
-        private int DetermineNumberOfWaysYouCanBeatTheRecord(int timing, int bestDistanceEverRecorded)
+        public static long DetermineNumberOfWaysYouCanBeatTheRecord(long timing, long bestDistanceEverRecorded)
         {
-            int result = 0;
-            for (int i = 0; i < timing; i++)
+            long result = 0;
+            for (long i = 0; i < timing; i++)
             {
-                int speed = i;
-                int timeLeft = timing - i;
+                long speed = i;
+                long timeLeft = timing - i;
 
-                int distance = speed * timeLeft;
+                long distance = speed * timeLeft;
 
                 if (distance > bestDistanceEverRecorded) result++;
             }
