@@ -29,7 +29,7 @@
                 {
                     seeds.Add(start + j);
                 }
-                long lowestLocation = FindLowestLocationFromSeeds(seeds.ToArray());
+                long lowestLocation = FindLowestLocationFromSeeds([.. seeds]);
                 if (lowestLocation < lowestValue)
                     lowestValue = lowestLocation;
 
@@ -38,7 +38,7 @@
                 {
                     seeds.Add(start + j);
                 }
-                lowestLocation = FindLowestLocationFromSeeds(seeds.ToArray());
+                lowestLocation = FindLowestLocationFromSeeds([.. seeds]);
                 if (lowestLocation < lowestValue)
                     lowestValue = lowestLocation;
             }
