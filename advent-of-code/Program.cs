@@ -2,4 +2,4 @@
 
 using advent_of_code;
 
-WaitForIt_PartTwo.Run();
+CamelCards_PartOne.Run();
