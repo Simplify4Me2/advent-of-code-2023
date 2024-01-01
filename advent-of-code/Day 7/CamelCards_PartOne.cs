@@ -12,7 +12,7 @@ namespace advent_of_code
 
             try
             {
-                StreamReader sr = new("D:\\Git\\advent-of-code-2023\\advent-of-code\\Day 7\\sample-camel-cards.txt");
+                StreamReader sr = new("D:\\Git\\advent-of-code-2023\\advent-of-code\\Day 7\\input-camel-cards.txt");
                 line = sr.ReadLine();
 
                 while (line != null)

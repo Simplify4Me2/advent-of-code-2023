@@ -19,8 +19,8 @@
                 };
 
                 int startIndex = 5;
-                string bidText = line.Substring(startIndex, line.Length - startIndex).Trim();
-                int.TryParse(bidText, out int bid);
+                string bidText = line[startIndex..].Trim();
+                if (!int.TryParse(bidText, out int bid)) throw new ArgumentException($"Bid is not a number: {bidText}");
 
                 hands.Add(new([.. cards], bid));
             }
