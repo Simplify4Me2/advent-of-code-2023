@@ -9,11 +9,11 @@ public class GameDataGenerator : IEnumerable<object[]>
     [
         [new Hand[] 
         {
-            new Hand(['3', '2', 'T', '3', 'K'], 765),
-            new Hand(['T', '5', '5', 'J', '5'], 684),
-            new Hand(['K', 'K', '6', '7', '7'], 28),
-            new Hand(['K', 'T', 'J', 'J', 'T'], 220),
-            new Hand(['Q', 'Q', 'Q', 'J', 'A'], 483)
+            new(['3', '2', 'T', '3', 'K'], 765),
+            new(['T', '5', '5', 'J', '5'], 684),
+            new(['K', 'K', '6', '7', '7'], 28),
+            new(['K', 'T', 'J', 'J', 'T'], 220),
+            new(['Q', 'Q', 'Q', 'J', 'A'], 483)
         },
         6440]
     ];
@@ -27,10 +27,27 @@ public class GameTest
 {
     [Theory]
     [ClassData(typeof(GameDataGenerator))]
-    public void DetermineTotalWinnings_ReturnsSumofEachHandsBidMultipliedWithItsRank(Hand[] hands, int expectedWinnings)
+    public void DetermineTotalWinnings_ReturnsSumOfEachHandsBidMultipliedWithItsRank(Hand[] hands, int expectedWinnings)
     {
         Game game = new(hands);
 
         Assert.Equal(expectedWinnings, game.TotalWinnings);
+    }
+
+    [Fact]
+    public void DetermineTotalWinnings_JokersAreWild()
+    {
+        var hands = new Jokerhand[]
+        {
+            new(['3', '2', 'T', '3', 'K'], 765),
+            new(['T', '5', '5', 'J', '5'], 684),
+            new(['K', 'K', '6', '7', '7'], 28),
+            new(['K', 'T', 'J', 'J', 'T'], 220),
+            new(['Q', 'Q', 'Q', 'J', 'A'], 483)
+        };
+
+        JokerGame game = new(hands);
+
+        Assert.Equal(5905, game.TotalWinnings);
     }
 }

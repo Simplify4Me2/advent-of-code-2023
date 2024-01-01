@@ -1,4 +1,6 @@
-﻿namespace advent_of_code
+﻿using advent_of_code.Day_7;
+
+namespace advent_of_code
 {
     public static class CamelCards_PartTwo
     {
@@ -20,8 +22,12 @@
 
                 sr.Close();
 
+                InputFormatter formatter = new([.. text]);
 
-                Console.WriteLine($"Result: {0}");
+                Jokerhand[] hands = formatter.Jokerhands;
+                JokerGame game = new(hands);
+
+                Console.WriteLine($"Total winnings: {game.TotalWinnings}");
                 Console.ReadLine();
             }
             catch (Exception e)

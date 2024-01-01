@@ -4,10 +4,36 @@
     {
         public Hand[] Hands => FindHands();
 
+        public Jokerhand[] Jokerhands => FindJokerhands();
+
         private Hand[] FindHands() 
         {
             List<Hand> hands = [];
             
+            for (int i = 0; i < text.Length; i++)
+            {
+                string line = text[i];
+
+                List<char> cards = [];
+                for (int j = 0; j < 5; j++)
+                {
+                    cards.Add(line[j]);
+                };
+
+                int startIndex = 5;
+                string bidText = line[startIndex..].Trim();
+                if (!int.TryParse(bidText, out int bid)) throw new ArgumentException($"Bid is not a number: {bidText}");
+
+                hands.Add(new([.. cards], bid));
+            }
+
+            return [.. hands];
+        }
+
+        private Jokerhand[] FindJokerhands()
+        {
+            List<Jokerhand> hands = [];
+
             for (int i = 0; i < text.Length; i++)
             {
                 string line = text[i];
