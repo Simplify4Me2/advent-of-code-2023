@@ -53,7 +53,7 @@ namespace advent_of_code.Day_7
 
                 occurences = Cards.Where(card => card == Cards[1]).Count();
 
-                if (occurences == 3)
+                if (occurences == 3 || occurences == 1)
                     return Type.ThreeOfAKind;
                 else if (occurences == 2)
                     return Type.TwoPair;
@@ -127,39 +127,6 @@ namespace advent_of_code.Day_7
                     }
                 }
             }
-
-            //if (x.Type > y.Type) return 1;
-            //if (x.Type < y.Type) return -1;
-
-            //if (x.Type == Type.FiveOfAKind && y.Type == Type.FiveOfAKind)
-            //{
-            //    //if (x.Cards[0] > y.Cards[0]) return 1;
-            //    //if (x.Cards[0] <  y.Cards[0]) return -1;
-            //    return 0;
-            //}
-            //if (x.Type == Type.FiveOfAKind && y.Type < Type.FiveOfAKind) return 1;
-            //if (x.Type < Type.FiveOfAKind && y.Type == Type.FiveOfAKind) return -1;
-
-            //if (x.Type == Type.FourOfAKind && y.Type < Type.FourOfAKind) return 1;
-            //if (x.Type < Type.FourOfAKind && y.Type == Type.FourOfAKind) return -1;
-
-            //if (x.Type == Type.FullHouse && y.Type < Type.FullHouse) return 1;
-            //if (x.Type < Type.FullHouse && y.Type == Type.FullHouse) return -1;
-
-            //if (x.Type == Type.ThreeOfAKind && y.Type < Type.ThreeOfAKind) return 1;
-            //if (x.Type < Type.ThreeOfAKind && y.Type == Type.ThreeOfAKind) return -1;
-
-            //if (x.Type == Type.TwoPair && y.Type < Type.TwoPair) return 1;
-            //if (x.Type < Type.TwoPair && y.Type == Type.TwoPair) return -1;
-
-            //if (x.Type == Type.OnePair && y.Type < Type.OnePair) return 1;
-            //if (x.Type < Type.OnePair && y.Type == Type.OnePair) return -1;
-
-            //if (x.Type == Type.HighCard && y.Type < Type.HighCard)
-            //{
-            //    //if (x.Cards[0] == 'A' && y.Cards[0] != 'A') return 1;
-            //    //if (x.Cards[0] != 'A' && y.Cards[0] == 'A') return -1;
-            //}
 
             return 0;
         }
