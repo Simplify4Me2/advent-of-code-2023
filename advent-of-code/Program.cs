@@ -2,4 +2,4 @@
 
 using advent_of_code;
 
-CamelCards_PartTwo.Run();
+HauntedWasteland_PartOne.Run();
