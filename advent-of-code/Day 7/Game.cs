@@ -1,7 +1,7 @@
 ﻿
 namespace advent_of_code.Day_7;
 
-public class Game(Hand[] hands)
+public class Game(IHand[] hands, bool jokerIsWild)
 {
     public int TotalWinnings => DetermineTotalWinnings();
 
@@ -9,7 +9,12 @@ public class Game(Hand[] hands)
     {
         int totalWinnings = 0;
 
-        Array.Sort(hands, new HandComparer());
+        IComparer<IHand> comparer;
+
+        if (jokerIsWild) comparer = new HandComparerJokerIsWild();
+        else comparer = new HandComparer();
+
+        Array.Sort(hands, comparer);
 
         for (int i = 0; i < hands.Length; i++)
         {
@@ -20,128 +25,58 @@ public class Game(Hand[] hands)
     }
 }
 
-public class JokerGame(Jokerhand[] hands)
+public interface IHand
 {
-    public int TotalWinnings => DetermineTotalWinnings();
-
-    private int DetermineTotalWinnings()
-    {
-        int totalWinnings = 0;
-
-        Array.Sort(hands, new JokerHandComparer());
-
-        for (int i = 0; i < hands.Length; i++)
-        {
-            totalWinnings += hands[i].Bid * (i + 1);
-        }
-
-        return totalWinnings;
-    }
+    char[] Cards { get; }
+    int Bid { get; }
+    Rank Rank { get; }
 }
 
-public class Hand(char[] cards, int bid)
+public class Hand(char[] cards, int bid) : IHand
 {
     public char[] Cards { get; } = cards;
     public int Bid { get; } = bid;
 
-    public Type Type => DetermineType();
+    public Rank Rank => DetermineType();
 
-    private Type DetermineType()
+    private Rank DetermineType()
     {
         int distinctCards = Cards.Distinct().Count();
 
         if (distinctCards == 1)
-            return Type.FiveOfAKind;
+            return Rank.FiveOfAKind;
         if (distinctCards == 2)
         {
             int occurences = Cards.Where(card => card == Cards[0]).Count();
 
             if (occurences == 4 || occurences == 1)
-                return Type.FourOfAKind;
+                return Rank.FourOfAKind;
             else
-                return Type.FullHouse;
+                return Rank.FullHouse;
         }
         if (distinctCards == 3)
         {
             int occurences = Cards.Where(card => card == Cards[0]).Count();
 
             if (occurences == 3)
-                return Type.ThreeOfAKind;
+                return Rank.ThreeOfAKind;
             else if (occurences == 2)
-                return Type.TwoPair;
+                return Rank.TwoPair;
 
             occurences = Cards.Where(card => card == Cards[1]).Count();
 
             if (occurences == 3 || occurences == 1)
-                return Type.ThreeOfAKind;
+                return Rank.ThreeOfAKind;
             else if (occurences == 2)
-                return Type.TwoPair;
+                return Rank.TwoPair;
         }
         if (distinctCards == 4)
-            return Type.OnePair;
+            return Rank.OnePair;
         if (distinctCards == 5)
-            return Type.HighCard;
+            return Rank.HighCard;
 
-        return Type.HighCard;
+        return Rank.HighCard;
     }
-}
-
-public class Jokerhand(char[] cards, int bid)
-{
-    public char[] Cards { get; } = cards;
-    public int Bid { get; } = bid;
-
-    public Type Type => DetermineType();
-
-    private Type DetermineType()
-    {
-        int distinctCards = Cards.Distinct().Count();
-
-        if (distinctCards == 1)
-            return Type.FiveOfAKind;
-        if (distinctCards == 2)
-        {
-            int occurences = Cards.Where(card => card == Cards[0]).Count();
-
-            if (occurences == 4 || occurences == 1)
-                return Type.FourOfAKind;
-            else
-                return Type.FullHouse;
-        }
-        if (distinctCards == 3)
-        {
-            int occurences = Cards.Where(card => card == Cards[0]).Count();
-
-            if (occurences == 3)
-                return Type.ThreeOfAKind;
-            else if (occurences == 2)
-                return Type.TwoPair;
-
-            occurences = Cards.Where(card => card == Cards[1]).Count();
-
-            if (occurences == 3 || occurences == 1)
-                return Type.ThreeOfAKind;
-            else if (occurences == 2)
-                return Type.TwoPair;
-        }
-        if (distinctCards == 4)
-            return Type.OnePair;
-        if (distinctCards == 5)
-            return Type.HighCard;
-
-        return Type.HighCard;
-    }
-}
-
-public enum Type
-{
-    FiveOfAKind = 6,
-    FourOfAKind = 5,
-    FullHouse = 4,
-    ThreeOfAKind = 3,
-    TwoPair = 2,
-    OnePair = 1,
-    HighCard = 0
 }
 
 public enum CardDeck
@@ -161,30 +96,13 @@ public enum CardDeck
     Two = 0
 }
 
-public enum JokerCardDeck
+public class HandComparer : IComparer<IHand>
 {
-    Ace = 12,
-    King = 11,
-    Queen = 10,
-    Ten = 9,
-    Nine = 8,
-    Eight = 7,
-    Seven = 6,
-    Six = 5,
-    Five = 4,
-    Four = 3,
-    Three = 2,
-    Two = 1,
-    Jack = 0,
-}
-
-public class HandComparer : IComparer<Hand>
-{
-    public int Compare(Hand x, Hand y)
+    public int Compare(IHand x, IHand y)
     {
-        if (x.Type > y.Type) return 1;
-        if (x.Type < y.Type) return -1;
-        if (x.Type == y.Type)
+        if (x.Rank > y.Rank) return 1;
+        if (x.Rank < y.Rank) return -1;
+        if (x.Rank == y.Rank)
         {
             if (Map(x.Cards[0]) > Map(y.Cards[0])) return 1;
             else if (Map(x.Cards[0]) < Map(y.Cards[0])) return -1;
@@ -235,13 +153,13 @@ public class HandComparer : IComparer<Hand>
     }
 }
 
-public class JokerHandComparer : IComparer<Jokerhand>
+public class HandComparerJokerIsWild : IComparer<IHand>
 {
-    public int Compare(Jokerhand x, Jokerhand y)
+    public int Compare(IHand x, IHand y)
     {
-        if (x.Type > y.Type) return 1;
-        if (x.Type < y.Type) return -1;
-        if (x.Type == y.Type)
+        if (x.Rank > y.Rank) return 1;
+        if (x.Rank < y.Rank) return -1;
+        if (x.Rank == y.Rank)
         {
             if (Map(x.Cards[0]) > Map(y.Cards[0])) return 1;
             else if (Map(x.Cards[0]) < Map(y.Cards[0])) return -1;
@@ -271,23 +189,40 @@ public class JokerHandComparer : IComparer<Jokerhand>
         return 0;
     }
 
-    private static JokerCardDeck Map(char character)
+    private static Rank Map(char character)
     {
         return character switch
         {
-            'A' => JokerCardDeck.Ace,
-            'K' => JokerCardDeck.King,
-            'Q' => JokerCardDeck.Queen,
-            'J' => JokerCardDeck.Jack,
-            'T' => JokerCardDeck.Ten,
-            '9' => JokerCardDeck.Nine,
-            '8' => JokerCardDeck.Eight,
-            '7' => JokerCardDeck.Seven,
-            '6' => JokerCardDeck.Six,
-            '5' => JokerCardDeck.Five,
-            '4' => JokerCardDeck.Four,
-            '3' => JokerCardDeck.Three,
-            _ => JokerCardDeck.Two,
+            'A' => Rank.Ace,
+            'K' => Rank.King,
+            'Q' => Rank.Queen,
+            'J' => Rank.Jack,
+            'T' => Rank.Ten,
+            '9' => Rank.Nine,
+            '8' => Rank.Eight,
+            '7' => Rank.Seven,
+            '6' => Rank.Six,
+            '5' => Rank.Five,
+            '4' => Rank.Four,
+            '3' => Rank.Three,
+            _ => Rank.Two,
         };
+    }
+
+    private enum Rank
+    {
+        Ace = 12,
+        King = 11,
+        Queen = 10,
+        Ten = 9,
+        Nine = 8,
+        Eight = 7,
+        Seven = 6,
+        Six = 5,
+        Five = 4,
+        Four = 3,
+        Three = 2,
+        Two = 1,
+        Jack = 0,
     }
 }

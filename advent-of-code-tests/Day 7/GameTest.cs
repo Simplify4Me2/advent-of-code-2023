@@ -27,9 +27,9 @@ public class GameTest
 {
     [Theory]
     [ClassData(typeof(GameDataGenerator))]
-    public void DetermineTotalWinnings_ReturnsSumOfEachHandsBidMultipliedWithItsRank(Hand[] hands, int expectedWinnings)
+    public void DetermineTotalWinnings(Hand[] hands, int expectedWinnings)
     {
-        Game game = new(hands);
+        Game game = new(hands, false);
 
         Assert.Equal(expectedWinnings, game.TotalWinnings);
     }
@@ -37,7 +37,7 @@ public class GameTest
     [Fact]
     public void DetermineTotalWinnings_JokersAreWild()
     {
-        var hands = new Jokerhand[]
+        var hands = new PlayingCards[]
         {
             new(['3', '2', 'T', '3', 'K'], 765),
             new(['T', '5', '5', 'J', '5'], 684),
@@ -46,7 +46,7 @@ public class GameTest
             new(['Q', 'Q', 'Q', 'J', 'A'], 483)
         };
 
-        JokerGame game = new(hands);
+        Game game = new(hands, true);
 
         Assert.Equal(5905, game.TotalWinnings);
     }

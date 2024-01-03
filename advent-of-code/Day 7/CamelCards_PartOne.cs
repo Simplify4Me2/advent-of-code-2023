@@ -26,7 +26,7 @@ namespace advent_of_code
                 InputFormatter formatter = new([.. text]);
 
                 Hand[] hands = formatter.Hands;
-                Game game = new(hands);
+                Game game = new(hands, false);
 
                 Console.WriteLine($"Total winnings: {game.TotalWinnings}");
                 Console.ReadLine();

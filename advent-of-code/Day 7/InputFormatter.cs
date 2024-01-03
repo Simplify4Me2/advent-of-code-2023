@@ -4,7 +4,7 @@
     {
         public Hand[] Hands => FindHands();
 
-        public Jokerhand[] Jokerhands => FindJokerhands();
+        public PlayingCards[] PlayingCards => FindPlayingCards();
 
         private Hand[] FindHands() 
         {
@@ -30,9 +30,9 @@
             return [.. hands];
         }
 
-        private Jokerhand[] FindJokerhands()
+        private PlayingCards[] FindPlayingCards()
         {
-            List<Jokerhand> hands = [];
+            List<PlayingCards> hands = [];
 
             for (int i = 0; i < text.Length; i++)
             {
