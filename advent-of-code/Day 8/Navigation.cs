@@ -7,7 +7,28 @@
 
         public int FindNumberOfSteps()
         {
-            return 0;
-        } 
+            int steps = 0;
+            string element = Nodes[0].Element;
+
+            while (element != Nodes.Last().Element)
+            {
+                for (int i = 0; i < Instructions.Length; i++)
+                {
+                    if (element == Nodes.Last().Element) continue;
+
+                    steps++;
+                    char instruction = Instructions[i];
+                    Node node = Nodes.First(node => node.Element == element);
+
+                    if (instruction == 'L')
+                        element = node.Left;
+                    else 
+                        element = node.Right;
+
+                }
+            }
+
+            return steps;
+        }
     }
 }

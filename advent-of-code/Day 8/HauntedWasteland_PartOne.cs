@@ -11,7 +11,7 @@ namespace advent_of_code
 
             try
             {
-                StreamReader sr = new("D:\\Git\\advent-of-code-2023\\advent-of-code\\Day 8\\sample-haunted-wasteland.txt");
+                StreamReader sr = new("D:\\Git\\advent-of-code-2023\\advent-of-code\\Day 8\\input-haunted-wasteland.txt");
                 line = sr.ReadLine();
 
                 while (line != null)

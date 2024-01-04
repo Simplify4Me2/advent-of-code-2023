@@ -38,7 +38,7 @@ namespace advent_of_code_tests.Day_8
 
             Navigation navigation = new(instructions, nodes);
 
-            Assert.Equal(2, navigation.FindNumberOfSteps());
+            Assert.Equal(6, navigation.FindNumberOfSteps());
         }
     }
 }
