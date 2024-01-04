@@ -1,30 +1,29 @@
 ﻿namespace advent_of_code.Day_8
 {
-    public class Navigation(char[] instructions, Node[] nodes)
+    public class Navigation(char[] instructions, Dictionary<string, Node> nodes)
     {
         private char[] Instructions { get; set; } = instructions;
-        private Node[] Nodes { get; set; } = nodes;
+        private Dictionary<string, Node> Nodes { get; } = nodes;
 
         public int FindNumberOfSteps()
         {
             int steps = 0;
-            string element = Nodes[0].Element;
+            string element = "AAA";
 
-            while (element != Nodes.Last().Element)
+            while (element != "ZZZ")
             {
                 for (int i = 0; i < Instructions.Length; i++)
                 {
-                    if (element == Nodes.Last().Element) continue;
+                    //if (element == Nodes.Last().Key) continue;
 
                     steps++;
                     char instruction = Instructions[i];
-                    Node node = Nodes.First(node => node.Element == element);
+                    Node node = Nodes[element];
 
                     if (instruction == 'L')
                         element = node.Left;
                     else 
                         element = node.Right;
-
                 }
             }
 

@@ -25,7 +25,7 @@ namespace advent_of_code
                 InputFormatter formatter = new([.. text]);
 
                 char[] instructions = formatter.GetInstructions();
-                Node[] nodes = formatter.GetNodes();
+                Dictionary<string, Node> nodes = formatter.GetNodes();
 
                 Navigation navigation = new(instructions, nodes);
 
