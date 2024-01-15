@@ -2,7 +2,7 @@
 
 namespace advent_of_code
 {
-    public static class HauntedWasteland_PartOne
+    public static class HauntedWasteland_PartTwo
     {
         public static void Run()
         {
@@ -29,7 +29,7 @@ namespace advent_of_code
 
                 Navigation navigation = new(instructions, nodes);
 
-                Console.WriteLine($"Total steps: {navigation.FindSteps()}");
+                Console.WriteLine($"Total ghost steps: {navigation.FindGhostSteps()}");
                 Console.ReadLine();
             }
             catch (Exception e)

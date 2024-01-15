@@ -2,4 +2,4 @@
 
 using advent_of_code;
 
-HauntedWasteland_PartOne.Run();
+HauntedWasteland_PartTwo.Run();

@@ -11,7 +11,6 @@
 
         public Dictionary<string, Node> GetNodes()
         {
-            //List<Node> nodes = [];
             Dictionary<string, Node> nodes = [];
 
             for (int i = 2; i < text.Length; i++)
@@ -19,7 +18,6 @@
                 string element = text[i][..3];
                 string left = text[i].Substring(7, 3);
                 string right = text[i].Substring(12, 3);
-                //nodes.Add(new Node(element, left, right));
                 nodes.Add(element, new Node(element, left, right));
             }
 
